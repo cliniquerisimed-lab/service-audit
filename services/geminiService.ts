@@ -39,7 +39,6 @@ export const generateSpeech = async (text: string): Promise<AudioBuffer | null> 
 
   const ai = new GoogleGenAI({ apiKey });
   try {
-    // Augmentation de la limite à 5000 caractères pour couvrir tout le texte
     const response = await ai.models.generateContent({
       model: "gemini-2.5-flash-preview-tts",
       contents: [{ parts: [{ text: `Lis l'intégralité de ce rapport d'audit avec une voix posée, professionnelle et convaincante : ${text.substring(0, 5000)}` }] }],
@@ -86,6 +85,7 @@ export const askGeminiExpert = async (
     systemInstruction: `Tu es un Auditeur Expert International et Consultant Senior au Cameroun. 
     EXPERTISE : Stratégie d'entreprise (OHADA, marché local) et Projets de Santé Publique (MINSANTE, PNDS, POCUS).
     MISSION : Analyser, critiquer de manière constructive et apporter des solutions concrètes pour optimiser les projets soumis.
+    OBLIGATION : Termine TOUJOURS ton diagnostic par une section intitulée "AVIS & RECOMMANDATIONS D'EXPERT" contenant des conseils pratiques et stratégiques pour améliorer le projet.
     RÈGLES DE FORMATAGE :
     1. JAMAIS d'astérisques (*), de dièses (#) ou de tirets (-) en début de ligne.
     2. Utilise UNIQUEMENT <strong></strong> pour mettre en avant des termes clés.
